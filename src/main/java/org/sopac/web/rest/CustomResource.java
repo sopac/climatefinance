@@ -1,7 +1,7 @@
 package org.sopac.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.collections.map.HashedMap;
+import com.monitorjbl.xlsx.StreamingReader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,28 +10,20 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sopac.domain.*;
-import org.sopac.domain.enumeration.*;
 import org.sopac.domain.enumeration.Currency;
+import org.sopac.domain.enumeration.*;
 import org.sopac.repository.*;
 import org.sopac.repository.search.DisbursementSearchRepository;
 import org.sopac.repository.search.ProjectSearchRepository;
 import org.sopac.security.AuthoritiesConstants;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.util.*;
 import java.util.stream.IntStream;
-
-import com.monitorjbl.xlsx.StreamingReader;
-
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 /**
  * Custom controller
@@ -57,7 +49,9 @@ public class CustomResource {
 
     private final DisbursementSearchRepository disbursementSearchRepository;
 
-    public CustomResource(CountryRepository countryRepository, SectorRepository sectorRepository, DetailedSectorRepository detailedSectorRepository, ProjectRepository projectRepository, ProjectSearchRepository projectSearchRepository, DisbursementRepository disbursementRepository, DisbursementSearchRepository disbursementSearchRepository) {
+    private final MetodologyRepository metodologyRepository;
+
+    public CustomResource(CountryRepository countryRepository, SectorRepository sectorRepository, DetailedSectorRepository detailedSectorRepository, ProjectRepository projectRepository, ProjectSearchRepository projectSearchRepository, DisbursementRepository disbursementRepository, DisbursementSearchRepository disbursementSearchRepository, MetodologyRepository metodologyRepository) {
         this.countryRepository = countryRepository;
         this.sectorRepository = sectorRepository;
         this.detailedSectorRepository = detailedSectorRepository;
@@ -65,6 +59,7 @@ public class CustomResource {
         this.projectSearchRepository = projectSearchRepository;
         this.disbursementRepository = disbursementRepository;
         this.disbursementSearchRepository = disbursementSearchRepository;
+        this.metodologyRepository = metodologyRepository;
     }
 
 
@@ -1715,7 +1710,7 @@ public class CustomResource {
     public String clean_old() {
 
         //assign detailed sectors
-        Map m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<String, String>();
         m.put("Agriculture", "Food Security");
         m.put("Community", "Livelihood Options");
         m.put("Disaster Risk", "Disaster Risk Reduction");
@@ -1839,4 +1834,132 @@ public class CustomResource {
 
     }
 
+
+    /**
+     * PATCH  /metodologies : Updates an existing metodology.
+     *
+     * @param metodology the metodology to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated metodology,
+     * or with status 400 (Bad Request) if the metodology is not valid,
+     * or with status 500 (Internal Server Error) if the metodology couldn't be updated
+     */
+    @PostMapping("/methodology")
+    public String patchMethodology(@RequestBody Metodology metodology) {
+        try {
+            if (metodology.getId() == null) {
+                List<Metodology> queryResult = metodologyRepository.findAll(new Sort(Sort.Direction.DESC, "id"));
+                if (queryResult.size() > 0) {
+                    metodology.setId(queryResult.get(0).getId());
+                }
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            Metodology result = metodologyRepository.save(metodology);
+
+            savePdf("methodology.pdf", metodology.getMarkdown());
+
+            return mapper.writeValueAsString(result);
+        } catch (Exception e) { e.printStackTrace(); }
+        return  "null";
+    }
+
+    /**
+     * GET  /metodologies : get all the metodologies.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of metodologies in body
+     */
+    @GetMapping("/methodology")
+    public String getMethodology() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<Metodology> queryResult = metodologyRepository.findAll(new Sort(Sort.Direction.DESC, "id"));
+            if (queryResult.size() > 0) {
+                return mapper.writeValueAsString(queryResult.get(0));
+            } else {
+                return "null";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "null";
+    }
+
+    @GetMapping("/methodologypdf")
+//    @GetMapping("/methodology")
+    public String getMethodologyPdf() {
+        try {
+            List<Metodology> queryResult = metodologyRepository.findAll(new Sort(Sort.Direction.DESC, "id"));
+            if (queryResult.size() > 0) {
+                    savePdf("methodology.pdf", queryResult.get(0).getMarkdown());
+                return String.format("{\"file\": \"%s\"}", "methodology.pdf");
+            } else {
+                return String.format("{\"error\": \"%s\"}", "DB is empty");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Error";
+    }
+
+    private final boolean savePdf(String filename, String markdown) {
+        try {
+            //                Document document = new Document(PageSize.LETTER);
+//                PdfWriter.getInstance(document, new FileOutputStream(fileName));
+//                document.open();
+//                document.addCreationDate();
+//
+//                HTMLWorker htmlWorker = new HTMLWorker(document);
+//                htmlWorker.parse(new StringReader(markdown));
+//                document.close();
+//                System.out.println("Done");
+
+//                //Flying Saucer part
+//                OutputStream out = new FileOutputStream(fileName);
+//                ITextRenderer renderer = new ITextRenderer();
+//
+//                renderer.setDocumentFromString(markdown.replace("&nbsp;", "&#160;"));
+//                renderer.layout();
+//                renderer.createPDF(out);
+//
+//                out.close();
+
+
+            OutputStream os = new FileOutputStream(filename);
+            String source = String.format("<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "<title></title>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "%s" +
+                    "</body>\n" +
+                    "</html>\n",
+                markdown
+                .replace("\b&\b", "\\&")
+                .replace("&nbsp;", "&#160;")
+                .replace("<table>", "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">")
+
+            );
+
+
+            PdfRendererBuilder builder = new PdfRendererBuilder();
+//                    builder.useFastMode();
+            builder.withHtmlContent(source, "");
+            builder.toStream(os);
+            builder.run();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        try {
+            File outputFile = new File(filename);
+            return outputFile.exists() && outputFile.length() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
