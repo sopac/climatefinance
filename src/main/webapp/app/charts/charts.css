@@ -31,3 +31,7 @@ h2 {
 .table th {
     border-top: none;
 }
+.chart-notes {
+    height: auto;
+    font-family: serif;
+}
