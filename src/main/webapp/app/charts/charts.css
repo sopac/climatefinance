@@ -35,3 +35,6 @@ h2 {
     height: auto;
     font-family: serif;
 }
+.chart-notes p {
+    margin-bottom: 0px;
+}

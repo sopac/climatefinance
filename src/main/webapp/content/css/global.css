@@ -267,4 +267,12 @@ tr {
     page-break-before: auto;
 }
 
+@media screen and (max-width: 767px) {
+    .btn-export-pdf {
+        display: none !important;
+    }
+    .chart-legend {
+        display: none !important;
+    }
+}
 /* jhipster-needle-css-add-main JHipster will add new css style */
