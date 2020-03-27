@@ -55,10 +55,8 @@ export class MethodologyEditComponent implements OnInit {
             'bulletedList',
             'numberedList',
             '|',
-            'imageUpload',
             'blockQuote',
             'insertTable',
-            'mediaEmbed',
             'undo',
             'redo'
         ]
