@@ -46,20 +46,7 @@ export class MethodologyEditComponent implements OnInit {
     saveInProgress = false;
 
     config = {
-        toolbar: [
-            'heading',
-            '|',
-            'bold',
-            'italic',
-            'link',
-            'bulletedList',
-            'numberedList',
-            '|',
-            'blockQuote',
-            'insertTable',
-            'undo',
-            'redo'
-        ]
+        toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', 'undo', 'redo']
     };
     constructor(private methodologyService: MethodologyService) {}
 
