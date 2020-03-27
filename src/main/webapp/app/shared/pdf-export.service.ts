@@ -41,7 +41,7 @@ export class PdfExportService {
                 }
             });
 
-            pdfMake.createPdf(docDefinition).download('chartToPdf' + '.pdf');
+            pdfMake.createPdf(docDefinition).download('document' + '.pdf');
         });
     }
     private htmlExport(el: HTMLElement, options: any) {

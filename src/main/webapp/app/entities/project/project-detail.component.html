@@ -1,134 +1,136 @@
 <div class="row">
     <div class="col-lg-8 offset-lg-2">
         <div *ngIf="project">
-            <h2><span>Project</span> {{project.id}} : {{project.projectTitle}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <table class="row-md jh-entity-details">
-                <tr>
-                    <th style="width: 200px;"><span>Project Title</span></th>
-                    <td>
-                        <span>{{project.projectTitle}}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th><span>Project Description</span></th>
-                    <td>
-                        <span><i>{{project.projectDescription}}</i></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th><span>Notes</span></th>
-                    <td>
-                        <span>{{project.notes}}</span>
-                    </td>
-                </tr>
-            </table>
+            <div  class="pdf-exportable" #projectDetails>
+                <h2><span>Project</span> {{project.id}} : {{project.projectTitle}}</h2>
+                <hr>
+                <jhi-alert-error></jhi-alert-error>
+                <table class="row-md jh-entity-details">
+                    <tr>
+                        <th style="width: 200px;"><span>Project Title</span></th>
+                        <td>
+                            <span>{{project.projectTitle}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span>Project Description</span></th>
+                        <td>
+                            <span><i>{{project.projectDescription}}</i></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span>Notes</span></th>
+                        <td>
+                            <span>{{project.notes}}</span>
+                        </td>
+                    </tr>
+                </table>
 
-            <hr/>
+                <hr/>
 
-            <div class="entity-details">
-                <div class="record">
-                    <div class="title">Country</div>
-                    <div class="value"><a *ngIf="project.country" [routerLink]="['/country', project.country?.id, 'view']">{{project.country?.name}}</a> </div>
-                </div>
+                <div class="entity-details">
+                    <div class="record">
+                        <div class="title">Country</div>
+                        <div class="value"><a *ngIf="project.country" [routerLink]="['/country', project.country?.id, 'view']">{{project.country?.name}}</a> </div>
+                    </div>
 
-                <div class="record">
-                    <div class="title"> Project Type </div>
-                    <div class="value"> {{project.projectType}} </div>
-                </div>
+                    <div class="record">
+                        <div class="title"> Project Type </div>
+                        <div class="value"> {{project.projectType}} </div>
+                    </div>
 
-                <div class="record">
-                    <div class="title">Sector</div>
-                    <div class="value">
-                        <div *ngIf="project.sector">
-                            <a [routerLink]="['/sector', project.sector?.id, 'view']">{{project.sector?.name}}</a>
+                    <div class="record">
+                        <div class="title">Sector</div>
+                        <div class="value">
+                            <div *ngIf="project.sector">
+                                <a [routerLink]="['/sector', project.sector?.id, 'view']">{{project.sector?.name}}</a>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="record">
+                        <div class="title">Total Country Allocation</div>
+                        <div class="value">{{ project.totalFundingCurrency || 'USD' }}{{project.totalFundingAmount|number}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Weighted Country Allocation</div>
+                        <div class="value">{{project.estimatedCountryAllocation|number}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Weighted Country Allocation USD</div>
+                        <div class="value">{{project.total|number}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Principal Source</div>
+                        <div class="value">{{project.principalSource}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Additional Source</div>
+                        <div class="value">{{project.additionalSource}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Laterality</div>
+                        <div class="value">{{project.laterality}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Funding Basis</div>
+                        <div class="value">{{project.fundingBasis}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Modality</div>
+                        <div class="value">{{project.modality}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Appropriated</div>
+                        <div class="value">{{project.appropriated}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Weighting Percentage</div>
+                        <div class="value">{{project.weightingPercentage}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Implementing Agency</div>
+                        <div class="value">{{project.ministry}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Other Stakeholders</div>
+                        <div class="value">{{project.otherStakeholders}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Start Year</div>
+                        <div class="value">{{project.startYear | date:'mediumDate'}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">End Year</div>
+                        <div class="value">{{project.endYear | date:'mediumDate'}}</div>
+                    </div>
+
+                    <div class="record">
+                        <div class="title">Status</div>
+                        <div class="value">{{project.status}}</div>
+                    </div>
+
+
+                    <!-- <div class="record">
+                         <div class="title">Inkind Percentage</div>
+                         <div class="value">{{project.inkindPercentage}}</div>
+                         </div>
+                    -->
+
                 </div>
-
-                <div class="record">
-                    <div class="title">Total Country Allocation</div>
-                    <div class="value">{{ project.totalFundingCurrency || 'USD' }}{{project.totalFundingAmount|number}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Weighted Country Allocation</div>
-                    <div class="value">{{project.estimatedCountryAllocation|number}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Weighted Country Allocation USD</div>
-                    <div class="value">{{project.total|number}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Principal Source</div>
-                    <div class="value">{{project.principalSource}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Additional Source</div>
-                    <div class="value">{{project.additionalSource}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Laterality</div>
-                    <div class="value">{{project.laterality}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Funding Basis</div>
-                    <div class="value">{{project.fundingBasis}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Modality</div>
-                    <div class="value">{{project.modality}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Appropriated</div>
-                    <div class="value">{{project.appropriated}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Weighting Percentage</div>
-                    <div class="value">{{project.weightingPercentage}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Implementing Agency</div>
-                    <div class="value">{{project.ministry}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Other Stakeholders</div>
-                    <div class="value">{{project.otherStakeholders}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Start Year</div>
-                    <div class="value">{{project.startYear | date:'mediumDate'}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">End Year</div>
-                    <div class="value">{{project.endYear | date:'mediumDate'}}</div>
-                </div>
-
-                <div class="record">
-                    <div class="title">Status</div>
-                    <div class="value">{{project.status}}</div>
-                </div>
-
-
-                <!-- <div class="record">
-                     <div class="title">Inkind Percentage</div>
-                     <div class="value">{{project.inkindPercentage}}</div>
-                     </div>
-                -->
-
             </div>
             <hr/>
 
@@ -152,11 +154,9 @@
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
             </button>
 
-            <a type="button"
-                href="/report?id={{project.id}}"
-                class="btn btn-warning">
-                <b>Report</b></span>
-            </a>
+            <button type="button" (click)="exportPdf(projectDetails)" class="btn btn-warning">
+                <b>Report</b>
+            </button>
 
         </div>
 

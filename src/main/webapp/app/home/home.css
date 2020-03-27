@@ -1,47 +1,11 @@
 /*****************************************************************************/
-/*                                   Logos                                   */
-/*****************************************************************************/
-.owner-logo {
-    text-align: center;
-    max-height: 180px;
-    margin: 20px 0px;
-}
-.owner-logo img {
-}
-.climate-change-bg {
-    text-align: right;
-    margin: 20px 0px;
-    position: relative;
-    display: inline-block;
-    float: right;
-}
-
-.climate-change-bg .overlay {
-    font-weight: bold;
-    font-size: 26px;
-    line-height: 50px;
-    color: #fff;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    white-space: nowrap;
-    transform: translate(-50%, -50%);
-}
-
-@media screen and (min-width: 768px) {
-    .climate-change-bg .overlay {
-        font-size: 36px;
-    }
-}
-
-/*****************************************************************************/
 /*                                  Content                                  */
 /*****************************************************************************/
 
 .page-header {
     color: #2b6eb6;
-    font-size: 36px;
-    font-weight: 300;
+    font-size: 45px;
+    font-weight: 500;
     margin-top: 20px;
 }
 

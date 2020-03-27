@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
+import { PdfExportService } from '../../shared';
 
 import { IProject } from 'app/shared/model/project.model';
 
@@ -12,7 +13,7 @@ import { IProject } from 'app/shared/model/project.model';
 export class ProjectDetailComponent implements OnInit {
     project: IProject;
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute, private pdfService: PdfExportService) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ project }) => {
@@ -29,5 +30,9 @@ export class ProjectDetailComponent implements OnInit {
     }
     previousState() {
         window.history.back();
+    }
+
+    exportPdf(element: HTMLElement) {
+        this.pdfService.exportPdf(element, 'canvas', { pageOrientation: 'portrait' });
     }
 }

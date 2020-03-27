@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { HomeService } from './home.service';
-import { Validcountry } from './validcountry';
 import { GenericCount } from './genericcount';
 import { CountryCount } from './countrycount';
 import { LoginModalService, Principal, Account } from 'app/core';
@@ -23,7 +22,6 @@ export class HomeComponent implements OnInit {
     countryCountChart: GenericCount[];
     countryValueChart: ValueCount[];
 
-    // number chart
     viewNumber: any[] = [undefined, 160];
 
     constructor(

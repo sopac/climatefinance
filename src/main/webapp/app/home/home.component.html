@@ -1,22 +1,6 @@
 <div class="row">
-    <div class="col-sm-3">
-        <div class="owner-logo">
-            <img class="img-fluid" src="../../content/images/spc.png"/>
-        </div>
-    </div>
-    <div class="col-sm-9">
-        <div class="climate-change-bg">
-            <!-- <img class="img-fluid" src="../../content/images/climate2.png"/> -->
-            <!-- <span class="overlay"> -->
-            <!-- Climate change -->
-            <!-- </span> -->
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-12">
-        <h1 class="page-header">SIG Climate Change Finance Tracking Tool</h1>
+        <h1 class="page-header">Pacific Climate Change Finance Tracking Tool</h1>
         <hr/>
         <div [ngSwitch]="isAuthenticated()">
             <div *ngSwitchCase="true">
@@ -24,7 +8,20 @@
                     <span class="welcome-text alert alert-success" *ngIf="account">
                         Welcome, {{account.firstName}} {{account.lastName}}.
                     </span>
-                    <a routerLink="/project" class="btn btn-primary">Browse Projects</a>
+                    <button class="btn btn-primary"
+                        routerLink="/project">
+                        <span>
+                            Browse Projects
+                        </span>
+                    </button>
+                    <button class="btn btn-primary jh-create-entity create-project"
+                        routerLink="/project/new">
+                        <fa-icon icon="plus"></fa-icon>
+                        <span class="hidden-sm-down">
+                            Register New Project
+                        </span>
+                    </button>
+
                 </div>
 
                 <div class="country-charts" *ngIf="countryCountChart" >
@@ -96,8 +93,8 @@
                 </p>
 
                 <button type="button"
-                        (click)="login()"
-                        class="btn btn-primary">
+                    (click)="login()"
+                    class="btn btn-primary">
                     <b>Login</b>
                 </button>
 
@@ -109,7 +106,7 @@
                     Secretariat of the Pacific Environment Programme
                     (SPREP) and the Pacific Islands Forum Secretariat
                     (PIFS). Further information is available at
-                    <a href="http://ccprojects.gsd.spc.int/isacc">ccprojects.gsd.spc.int</a>
+                    <a href="https://gem.spc.int/projects/isacc">gem.spc.int</a>
 
                 </p>
 
