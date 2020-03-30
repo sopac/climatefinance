@@ -108,7 +108,7 @@ export class ChartsComponent implements OnInit {
         this._selectMethod('SectorValue').subscribe(sectorValue => {
             this.sectorValue = sectorValue;
             for (const { name, value } of sectorValue) {
-                this.sectorInfo[name] = { total: value * 10e6 };
+                this.sectorInfo[name] = { total: value * 1e6 };
             }
         });
     }
@@ -124,7 +124,7 @@ export class ChartsComponent implements OnInit {
         this._selectMethod('MinistryValue').subscribe(ministryValue => {
             this.ministryValue = ministryValue;
             for (const { name, value } of ministryValue) {
-                this.ministryInfo[name] = { total: value * 10e6 };
+                this.ministryInfo[name] = { total: value * 1e6 };
             }
         });
     }
@@ -150,7 +150,7 @@ export class ChartsComponent implements OnInit {
                 if (!name) {
                     name = 'Source not specified';
                 }
-                this.sourceInfo[name] = { total: value * 10e6 };
+                this.sourceInfo[name] = { total: value * 1e6 };
             }
         });
     }
@@ -162,7 +162,7 @@ export class ChartsComponent implements OnInit {
         this._selectMethod('ProjectTypeValue').subscribe(projectTypeValue => {
             this.projectTypeValue = projectTypeValue;
             for (const { name, value } of projectTypeValue) {
-                this.projectTypeInfo[name] = { total: value * 10e6 };
+                this.projectTypeInfo[name] = { total: value * 1e6 };
             }
         });
     }
