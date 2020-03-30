@@ -93,6 +93,11 @@ export class ChartService {
             .get<GenericCount[]>(this.restUrl + '/ministrycountbycountry?countryId=' + countryId)
             .pipe(catchError(this.handleError('getMinistryCountByCountry', [])));
     }
+    getMinistryValueByCountry(countryId): Observable<ValueCount[]> {
+        return this.http
+            .get<ValueCount[]>(this.restUrl + '/ministryvaluebycountry?countryId=' + countryId)
+            .pipe(catchError(this.handleError('getMinistryValueByCountry', [])));
+    }
 
     getSectorValueByCountry(countryId): Observable<ValueCount[]> {
         return this.http
@@ -126,6 +131,11 @@ export class ChartService {
         return this.http
             .get<GenericCount[]>(this.restUrl + '/projecttypecountbycountry?countryId=' + countryId)
             .pipe(catchError(this.handleError('getProjectTypeCountByCountry', [])));
+    }
+    getProjectTypeValueByCountry(countryId): Observable<ValueCount[]> {
+        return this.http
+            .get<ValueCount[]>(this.restUrl + '/projecttypevaluebycountry?countryId=' + countryId)
+            .pipe(catchError(this.handleError('getProjectTypeValue', [])));
     }
 
     getSourceCountByCountry(countryId): Observable<GenericCount[]> {

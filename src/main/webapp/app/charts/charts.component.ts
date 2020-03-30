@@ -179,7 +179,7 @@ export class ChartsComponent implements OnInit {
         const countryFilter = ` AND country.id:${this.countryId}`;
         const value = data.name || data;
         const params = new URLSearchParams();
-        params.append('search', `${type_}:"${value}"`);
+        params.append('search', `${type_}:"${value.replace('ID ', 'ID-')}"`);
         this.router.navigateByUrl(`/project;${params}${countryFilter}`);
     }
 
