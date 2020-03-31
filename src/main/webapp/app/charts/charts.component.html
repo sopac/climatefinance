@@ -119,12 +119,9 @@
                         [labels]="showLabels"
                         (select)="onSelectChartItem($event, 'projectType');">
                         <ng-template #tooltipTemplate let-model="model">
-                            <div class="h5">
+                            <div class="h6">
                                 {{ (model.name|projectType).title }}
                             </div>
-                            <p style="max-width:  300px">
-                                {{ (model.name|projectType).text }}
-                            </p>
                             <div class="my-3">
                                 Projects: {{ model.value }}
                             </div>
@@ -306,7 +303,7 @@
 
             <tr *ngFor="let vc of sectorValue">
                 <td><a style="color: #2b6ea1; font-weight: lighter;"
-                        href="#/project;search=sector.name:{{vc.name}}">{{vc.name}}</a>
+                        [href]="'#/project;search=sector.name:' + vc.name + ' AND country.id:' + countryId">{{vc.name}}</a>
                 </td>
                 <td>USD {{vc.value|number:'.0-2'}} million</td>
             </tr>
@@ -329,7 +326,7 @@
 
                 <tr *ngFor="let vc of countryValueChart">
                     <td><a style="color: #2b6ea1; font-weight: lighter;"
-                            href="#/project;search=country.name:{{vc.name.replace('Islands', '').trim()}}">{{vc.name}}</a>
+                            [href]="'#/project;search=country.name:' + vc.name.replace('Islands', '').trim() + ' AND country.id:' + countryId">{{vc.name}}</a>
                     </td>
                     <td>USD {{vc.value|number:'.0-2'}} million</td>
                 </tr>
@@ -352,7 +349,7 @@
 
                 <tr *ngFor="let vc of sourceValue">
                     <td><a style="color: #2b6ea1; font-weight: lighter;"
-                            href="#/project;search=principalSource:{{vc.name.trim()}}">{{vc.name}}</a>
+                            [href]="'#/project;search=principalSource:' + vc.name.trim() + ' AND country.id:' + countryId">{{vc.name}}</a>
                     </td>
                     <td>USD {{vc.value|number:'.0-2'}} million</td>
                 </tr>
